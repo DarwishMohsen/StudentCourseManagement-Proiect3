@@ -1,0 +1,50 @@
+﻿@model PAW_Project.Models.Course
+@{
+    ViewData["Title"] = Model.Name;
+
+    string dynamicId = "web";
+    if (Model.Name.Contains("Baze")) dynamicId = "db";
+    else if (Model.Name.Contains("Retele")) dynamicId = "net";
+}
+
+<main class="container my-5">
+    <section id="@dynamicId" class="mb-5 rounded shadow-lg">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="border-bottom pb-2">@Model.Name</h2>
+                <p class="lead">Anul @Model.Year, Semestrul @Model.Semester</p>
+                
+                <h5 class="mt-4">Orar și Locație:</h5>
+                <ul>
+                    @foreach (var schedule in Model.Schedules)
+                    {
+                        <li>
+                            <strong>@schedule.Date.ToString("dd-MMM-yy")</strong> la @schedule.Hour —
+                            Sala: @(schedule.Rooms.Any() ? string.Join(", ", schedule.Rooms.Select(r => r.Building)) : "Nespecificat")
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <div class="card glass-card">
+                    <div class="card-body">
+                        <h6 class="text-uppercase small mb-3">Echipa Didactică</h6>
+                        @if (Model.Professors.Any())
+                        {
+                            @foreach (var prof in Model.Professors)
+                            {
+                                <p class="mb-1"><strong>@prof.FirstName @prof.LastName</strong></p>
+                            }
+                        }
+                        else
+                        {
+                            <p class="mb-1">TBD</p>
+                        }
+                        <hr>
+                        <p class="mb-0 small text-center">5 Credite</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

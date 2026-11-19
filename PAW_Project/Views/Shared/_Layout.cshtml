@@ -1,0 +1,162 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PAW_Project.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html><html lang="ro"><head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Darwish Co.</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+    .nav-link:hover {
+        color: #ffc107 !important;
+        transition: 0.3s;
+    }
+
+    footer { 
+        background: #212529; 
+        color: white; 
+        padding: 20px 0; 
+        margin-top: 40px; 
+    }
+
+    .hero-section { 
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.pexels.com/photos/159775/library-la-trobe-study-students-159775.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        padding: 150px 0;
+        border-radius: 10px;
+        color: white !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    section { 
+        padding: 80px 40px; 
+        margin-bottom: 50px !important;
+        border-radius: 20px;
+        background-size: cover;
+        background-position: center;
+        color: white !important;
+    }
+
+    #web {
+        background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), 
+                        url('https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg');
+    }
+
+    #db {
+        background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), 
+                        url('https://images.pexels.com/photos/3861976/pexels-photo-3861976.jpeg');
+    }
+
+    #net {
+        background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), 
+                        url('https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg');
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+    }
+
+    .guide-header {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                          url('https://images.pexels.com/photos/267586/pexels-photo-267586.jpeg');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .info-card {
+        border: none;
+        border-top: 4px solid #0d6efd;
+        transition: 0.3s;
+    }
+    .info-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    </style></head><body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Darwish Co.</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    
+                    <div class="navbar-nav me-auto">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Acasă</a>
+                        <a class="nav-link" asp-controller="Courses" asp-action="Index">Cursuri</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Despre">Despre</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Faq">FAQ</a>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link text-warning fw-bold" asp-controller="Professors" asp-action="Index">Profesori</a>
+                            <a class="nav-link text-warning fw-bold" asp-controller="Rooms" asp-action="Index">Săli</a>
+                        }
+
+                        @if (User.IsInRole("Student"))
+                        {
+                            <a class="nav-link" asp-controller="Home" asp-action="MyCourses">Cursurile Mele</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Ghid">Ghid Student</a>
+                        }
+                    </div>
+
+                    <div class="navbar-nav ms-auto d-flex align-items-center">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            var currentUser = await UserManager.GetUserAsync(User);
+                            
+                            @if (currentUser?.ProfilePicture != null)
+                            {
+                                <img src="data:image/*;base64,@(Convert.ToBase64String(currentUser.ProfilePicture))" alt="Profile" class="rounded-circle me-2" style="width: 35px; height: 35px; object-fit: cover; border: 2px solid white;" />
+                            }
+                            else
+                            {
+                                <img src="https://via.placeholder.com/35" alt="Default Profile" class="rounded-circle me-2" style="width: 35px; height: 35px; border: 2px solid white;" />
+                            }
+                            <span class="nav-link text-white fw-bold me-3">Salut, @(currentUser?.UserName?.Split('@')[0])!</span>
+                            
+                            <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm fw-bold shadow-sm">Logout</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="nav-link text-white fw-bold" asp-controller="Auth" asp-action="Register">Înregistrare</a>
+                            <a class="btn btn-light text-primary ms-2 fw-bold shadow-sm" asp-controller="Auth" asp-action="Login">Login</a>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2026 Proiect Management Cursuri Studenți - Darwish Mohsen</p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)</body></html>

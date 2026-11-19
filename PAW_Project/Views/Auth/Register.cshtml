@@ -1,0 +1,47 @@
+﻿@model PAW_Project.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Înregistrare";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Creează Cont Nou</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Auth" asp-action="Register" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-bold text-dark">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Introdu adresa de email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label fw-bold text-dark">Parola</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Introdu parola" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label fw-bold text-dark">Confirmă Parola</label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirmă parola" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="ProfilePicture" class="form-label fw-bold text-dark">Poză de Profil (Obligatoriu)</label>
+                            <input asp-for="ProfilePicture" type="file" class="form-control" accept="image/*" required />
+                            <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success w-100 fw-bold">Înregistrează-te</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

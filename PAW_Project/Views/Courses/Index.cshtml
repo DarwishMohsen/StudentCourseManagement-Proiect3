@@ -1,0 +1,98 @@
+﻿@model IEnumerable<PAW_Project.Models.Course>
+
+@{
+    ViewData["Title"] = "Cursuri";
+}
+
+<div class="container mt-4">
+    <h1 class="text-primary mb-4">Management Cursuri</h1>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            <a asp-action="Create" class="btn btn-success shadow-sm">Adaugă Curs Nou</a>
+        </p>
+    }
+
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover table-striped align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nume Curs</th>
+                    <th>An / Semestru</th>
+                    <th>Profesori</th>
+                    <th>Orar & Sală</th>
+                    <th class="text-end">Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold text-primary">@item.Name</td>
+                        <td>An @item.Year / Sem @item.Semester</td>
+                        <td>
+                            @if (item.Professors != null && item.Professors.Any())
+                            {
+                                foreach (var prof in item.Professors)
+                                {
+                                    <span class="badge bg-info text-dark me-1 shadow-sm">
+                                        @prof.LastName @prof.FirstName
+                                    </span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic">Nespecificat</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Schedules != null && item.Schedules.Any())
+                            {
+                                foreach (var sched in item.Schedules)
+                                {
+                                    <div class="small mb-2 border-bottom pb-1">
+                                        <strong>@sched.Date.ToString("dddd")</strong> (@sched.Date.ToShortDateString())
+                                        <br />
+                                        @sched.Hour
+                                        <br />
+                                        <span class="text-secondary">
+                                            @if (sched.Rooms != null && sched.Rooms.Any())
+                                            {
+                                                @string.Join(", ", sched.Rooms.Select(r => r.Building))
+                                            }
+                                            else
+                                            {
+                                                <span>Fără sală</span>
+                                            }
+                                        </span>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic">Nu este programat</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.CourseID" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.CourseID" class="btn btn-sm btn-outline-info shadow-sm">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.CourseID" class="btn btn-sm btn-outline-danger shadow-sm">Delete</a>
+                            }
+                            
+                            @if (User.IsInRole("Student"))
+                            {
+                                <form asp-controller="Courses" asp-action="Enroll" method="post" class="d-inline">
+                                    <input type="hidden" name="courseId" value="@item.CourseID" />
+                                    <button type="submit" class="btn btn-sm btn-success shadow-sm">Înscrie-te</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

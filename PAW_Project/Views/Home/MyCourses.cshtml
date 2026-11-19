@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PAW_Project.Models.Studies>
+@{
+    ViewData["Title"] = "Cursurile mele";
+}
+<div class="container mt-5">
+    <h2>Cursurile mele</h2>
+    <table class="table mt-4 shadow-sm">
+        <thead class="table-primary">
+            <tr><th>Nume Curs</th><th>Semestru</th></tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr><td>@item.Course.Name</td><td>@item.Course.Semester</td></tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="2" class="text-center">Nu ești înscris la niciun curs.</td></tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="Courses" asp-action="Index" class="btn btn-primary">Vezi toate cursurile</a>
+</div>

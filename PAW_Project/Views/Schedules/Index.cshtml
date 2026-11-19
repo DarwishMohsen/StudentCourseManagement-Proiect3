@@ -1,0 +1,43 @@
+﻿@model IEnumerable<PAW_Project.Models.Schedule>
+
+@{
+    ViewData["Title"] = "Orar";
+}
+
+<div class="container mt-4">
+    <h1 class="text-primary mb-4">Management Orar</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success shadow-sm">Adaugă Programare Nouă</a>
+    </p>
+
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover table-striped align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Date)</th>
+                    <th>@Html.DisplayNameFor(model => model.Hour)</th>
+                    <th>Curs</th> <!-- ID Replacement Requirement -->
+                    <th class="text-end">Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Date.ToShortDateString()</td>
+                        <td>@Html.DisplayFor(modelItem => item.Hour)</td>
+                        <td class="fw-bold">
+                            @Html.DisplayFor(modelItem => item.Course.Name)
+                        </td>
+                        <td class="text-end">
+                            <a asp-action="Edit" asp-route-id="@item.ScheduleID" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.ScheduleID" class="btn btn-sm btn-outline-info shadow-sm">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.ScheduleID" class="btn btn-sm btn-outline-danger shadow-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

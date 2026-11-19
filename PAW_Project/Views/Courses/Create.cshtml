@@ -1,0 +1,65 @@
+﻿@model PAW_Project.Models.Course
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container mt-4">
+    <h1 class="text-primary">Adaugă Curs Nou</h1>
+    <hr />
+    
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label fw-bold"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Year" class="control-label fw-bold"></label>
+                            <input asp-for="Year" class="form-control" />
+                            <span asp-validation-for="Year" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="Semester" class="control-label fw-bold"></label>
+                            <input asp-for="Semester" class="form-control" />
+                            <span asp-validation-for="Semester" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="control-label fw-bold">Profesori Alocați</label>
+                    <select name="professorIds" class="form-select" multiple asp-items="@(ViewBag.Professors as MultiSelectList)"></select>
+                    <small class="text-muted">CTRL + Click pentru selecție multiplă.</small>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="control-label fw-bold">Sală Implicită</label>
+                    <select name="roomId" class="form-select" asp-items="@(ViewBag.Rooms as SelectList)">
+                        <option value="">-- Alege o sală --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary shadow-sm">Salvare Curs</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Anulare</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
