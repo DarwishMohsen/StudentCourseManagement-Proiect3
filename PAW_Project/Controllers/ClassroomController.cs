@@ -19,7 +19,6 @@ namespace PAW_Project.Controllers
             _userManager = userManager;
         }
 
-        // Main Google Classroom-style Course Hub
         public async Task<IActionResult> Index(int courseId)
         {
             var course = await _context.Courses
@@ -45,7 +44,6 @@ namespace PAW_Project.Controllers
             return View(course);
         }
 
-        // Professor's own "My Courses" page
         [Authorize(Roles = "Professor")]
         public async Task<IActionResult> MyTeachingCourses()
         {
@@ -59,7 +57,6 @@ namespace PAW_Project.Controllers
             return View(prof?.Courses ?? new List<Course>());
         }
 
-        // Professor posts an Announcement
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Professor,Admin")]
@@ -86,7 +83,6 @@ namespace PAW_Project.Controllers
             return RedirectToAction(nameof(Index), new { courseId });
         }
 
-        // Public Comment on the Course Stream
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostCourseComment(int courseId, string content)
@@ -112,7 +108,6 @@ namespace PAW_Project.Controllers
             return RedirectToAction(nameof(Index), new { courseId });
         }
 
-        // Public Comment on a specific Announcement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostAnnouncementComment(int courseId, int announcementId, string content)

@@ -64,7 +64,6 @@ using (var scope = app.Services.CreateScope())
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    // Seed Roles
     if (!await roleManager.RoleExistsAsync("Admin"))
         await roleManager.CreateAsync(new IdentityRole("Admin"));
 
@@ -74,7 +73,6 @@ using (var scope = app.Services.CreateScope())
     if (!await roleManager.RoleExistsAsync("Professor"))
         await roleManager.CreateAsync(new IdentityRole("Professor"));
 
-    // Seed Admin User
     var adminEmail = "Admin@darwish.com";
     var adminPassword = "Admin123!";
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
@@ -104,7 +102,6 @@ using (var scope = app.Services.CreateScope())
             await userManager.RemoveFromRoleAsync(adminUser, "Student");
     }
 
-    // Seed Professor User (linked to P101 - Elvira Popescu)
     var profEmail = "prof@darwish.com";
     var profPassword = "Prof123!";
     var profUser = await userManager.FindByEmailAsync(profEmail);

@@ -5,7 +5,6 @@
 }
 
 <div class="container mt-4">
-    <!-- Course Header Banner -->
     <div class="p-4 mb-4 rounded-3 bg-primary text-white shadow-sm">
         <div class="d-flex justify-content-between align-items-center">
             <div>
@@ -17,7 +16,6 @@
     </div>
 
     <div class="row">
-        <!-- Left Column: Announcements Stream -->
         <div class="col-md-8">
             <h4 class="mb-3">📢 Anunțuri Curs</h4>
 
@@ -54,7 +52,6 @@
                             <p class="card-text">@ann.Content</p>
 
                             <hr />
-                            <!-- Public Comments on this Announcement -->
                             <div class="ms-2">
                                 <small class="fw-bold text-secondary">Comentarii (@ann.Comments.Count)</small>
                                 @foreach (var cm in ann.Comments.OrderBy(c => c.CreatedAt))
@@ -85,7 +82,6 @@
             }
         </div>
 
-        <!-- Right Column: Quick Links (Materials/Assignments) & General Course Comments -->
         <div class="col-md-4">
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-dark text-white fw-bold">📚 Resurse Curs</div>
@@ -96,7 +92,6 @@
                 </div>
             </div>
 
-            <!-- General Public Course Comments -->
             <div class="card shadow-sm">
                 <div class="card-header bg-secondary text-white fw-bold">💬 Discuții Generale Curs</div>
                 <div class="card-body">

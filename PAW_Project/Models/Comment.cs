@@ -15,14 +15,12 @@ namespace PAW_Project.Models
         public string AuthorId { get; set; } = string.Empty;
         public ApplicationUser? Author { get; set; }
 
-        // Public comments link to a Course or Announcement
         public int? CourseID { get; set; }
         public Course? Course { get; set; }
 
         public int? AnnouncementID { get; set; }
         public Announcement? Announcement { get; set; }
 
-        // Private comments link to an Assignment + the specific Student thread
         public int? AssignmentID { get; set; }
         public Assignment? Assignment { get; set; }
 

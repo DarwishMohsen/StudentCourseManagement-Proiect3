@@ -6,7 +6,6 @@ using PAW_Project.Models;
 
 namespace PAW_Project.Data
 {
-    // 1. THE CRITICAL FIX: We changed DbContext to IdentityDbContext<ApplicationUser>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -28,7 +27,6 @@ namespace PAW_Project.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // 2. CRITICAL: This base call tells Entity Framework to build the AspNetUsers tables
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Studies>(entity =>
