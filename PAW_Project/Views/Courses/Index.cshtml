@@ -75,6 +75,7 @@
                             }
                         </td>
                         <td class="text-end">
+                            <a asp-controller="Classroom" asp-action="Index" asp-route-courseId="@item.CourseID" class="btn btn-sm btn-primary shadow-sm">Classroom</a>
                             @if (User.IsInRole("Admin"))
                             {
                                 <a asp-action="Edit" asp-route-id="@item.CourseID" class="btn btn-sm btn-outline-primary shadow-sm">Edit</a>
